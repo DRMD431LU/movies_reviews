@@ -25,10 +25,27 @@ class UserRequestModel(BaseModel):
             raise ValueError('La longitud debe ser entre 3 y 50 :v')
         return username
 
-class UserResponseModel(BaseModel):
-    id: int
-    username: str
 
+class ResponseModel(BaseModel):
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
+
+
+class UserResponseModel(ResponseModel):
+    id: int
+    username: str
+
+
+class ReviewRequestModel(BaseModel):
+    user_id: int
+    movie_id: int
+    review: str
+    score: int
+
+
+class ReviewResponseModel(ResponseModel):
+    id: int
+    movie_id: int
+    review: str
+    score: int
