@@ -7,6 +7,7 @@ from schemas import UserRequestModel
 from schemas import UserResponseModel
 from schemas import ReviewRequestModel
 from schemas import ReviewResponseModel
+from schemas import ReviewRequestPutModel
 
 app = FastAPI(tittle='Proyecto',
             description='meh',
@@ -72,4 +73,16 @@ async def get_review(review_id: int):
     user_review = UserReview.select().where(UserReview.id == review_id).first()
     if user_review is None:
         raise HTTPException(status_code=404, detail='Review not found')
+    return user_review
+
+@app.put('/reviews/{review_id}', response_model=ReviewResponseModel)
+async def update_review(review_id: int, review_request: ReviewRequestPutModel):
+    user_review = UserReview.select().where(UserReview.id == review_id).first()
+    if user_review is None:
+        raise HTTPException(status_code=404, detail='Review not found')
+
+    user_review.review = review_request.review
+    user_review.score = review_request.score
+
+    user_review.save()
     return user_review
