@@ -1,7 +1,7 @@
 from pydantic import validator
 from pydantic import BaseModel
 
-class UserBaseModel(BaseModel):
+class UserRequestModel(BaseModel):
     username : str
     password : str
 
@@ -12,4 +12,5 @@ class UserBaseModel(BaseModel):
         return username
 
 class UserResponseModel(BaseModel):
-    pass
+    id: int
+    username: str
