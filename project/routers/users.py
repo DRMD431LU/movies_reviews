@@ -7,7 +7,7 @@ from ..schemas import UserRequestModel
 from ..schemas import UserResponseModel
 
 
-router = APIRouter(prefix='/api/v1/users')
+router = APIRouter(prefix='/users')
 
 
 @router.post('', response_model=UserResponseModel)
