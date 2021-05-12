@@ -1,5 +1,6 @@
 from fastapi import HTTPException
 from fastapi import APIRouter
+from fastapi.security import HTTPBasicCredentials
 
 from ..database import User
 
@@ -20,4 +21,13 @@ async def create_user(user: UserRequestModel):
         username=user.username,
         password=hash_password
     )
+    return user
+
+@router.post('/login', response_model=UserResponseModel)
+async def login(credentials: HTTPBasicCredentials):
+    user = User.select().where(User.username == credentials.username).first()
+    if user is None:
+        raise HTTPException(404, 'username not found')
+    if user.password != User.create_password(credentials.password):
+        raise HTTPException(404, 'poassword error')
     return user
