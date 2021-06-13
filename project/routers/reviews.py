@@ -12,7 +12,7 @@ from ..schemas import ReviewResponseModel
 from ..schemas import ReviewRequestPutModel
 
 router = APIRouter(prefix='/reviews')
-
+#revisado el 12/06/2021
 @router.post('', response_model=ReviewResponseModel)
 async def create_review(user_review: ReviewRequestModel):
     if User.select().where(User.id == user_review.user_id).first() is None:
